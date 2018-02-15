@@ -1,22 +1,20 @@
 package com.ittr.UI;
 
-import java.util.Scanner;
-
 import com.ittr.data.Order.PurchaseOrder;
 
 public class PurchaseOrderUI {
 	public void purchaseOrder(PurchaseOrder purchaseOrder){
-	String customerID;
-	String OrderID;
-	String EmployeeID;
-	String ShipVia;
-	String Freight;
-	String ShipName;
-	String ShipAddress;
-	String ShipCity;
-	String ShipRegion;
-	String ShipPostalCode;
-	String ShipCountry;
+//	String customerID;
+//	String OrderID;
+//	String EmployeeID;
+//	String ShipVia;
+//	String Freight;
+//	String ShipName;
+//	String ShipAddress;
+//	String ShipCity;
+//	String ShipRegion;
+//	String ShipPostalCode;
+//	String ShipCountry;
 //	@SuppressWarnings("resource")
 //	Scanner in = new Scanner(System.in); 
 //	System.out.println("Please enter CustomerID : ");

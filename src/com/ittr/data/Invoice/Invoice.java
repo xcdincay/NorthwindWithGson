@@ -26,7 +26,7 @@ public class Invoice {
 	private float Discount;
 	private double ExtendedPrice;
 	private double Freight;
-	private Order order =null;
+	private Order order = null;
 
 	public String getShipName() {
 		return ShipName;

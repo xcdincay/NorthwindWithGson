@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public class ProductData {
 
-	ArrayList<Product> results;
+	public ArrayList<Product> results;
 }

@@ -5,7 +5,7 @@ import com.ittr.data.OrderDetail.Order_DetailData;
 
 public class Order {
 
-	private int OrderID;
+	private long OrderID;
 	private String CustomerID;
 	private int EmployeeID;
 	private int ShipVia;
@@ -16,16 +16,25 @@ public class Order {
 	private String ShipRegion;
 	private String ShipPostalCode;
 	private String ShipCountry;
+	private String ExternalOrderID;
 	
-	Order_DetailData Order_Details;
+	private Order_DetailData Order_Details = null;
 	private Invoice invoice = null;
 
-	public int getOrderID() {
+	public long getOrderID() {
 		return OrderID;
 	}
 
-	public void setOrderID(int orderID) {
-		OrderID = orderID;
+	public void setOrderID(long l) {
+		OrderID = l;
+	}
+	
+	public String getExternalOrderID() {
+		return ExternalOrderID;
+	}
+
+	public void setExternalOrderID(String externalOrderID) {
+		ExternalOrderID = externalOrderID;
 	}
 
 	public String getCustomerID() {
@@ -114,5 +123,13 @@ public class Order {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
+	}
+
+	public Order_DetailData getOrder_Details() {
+		return Order_Details;
+	}
+
+	public void setOrder_Details(Order_DetailData order_Details) {
+		Order_Details = order_Details;
 	}
 }

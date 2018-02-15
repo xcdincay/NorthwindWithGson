@@ -1,4 +1,4 @@
-package com.ittr.services;
+	package com.ittr.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,18 @@ import com.google.gson.Gson;
 import com.ittr.data.Invoice.Invoice;
 import com.ittr.data.Invoice.InvoiceDataSet;
 import com.ittr.data.Order.SalesOrderDataSet;
+import com.ittr.services.connector.Connection;
 import com.ittr.api.util.Util;
 
 public class InvoiceFilterOData {
-	public void invoiceFilterByOrderID(){
+	public List<Invoice> invoiceFilterByOrderID(){
 		List<Invoice> invoiceList = new ArrayList<Invoice>();
 		int serviceResponseSize = 50;
 		DefaultHttpClient httpClient = null;
 		String queryForInvoice = "";
 		try {
-			//Northwind servisinden en fazla 50 kayýt dönüyor
-			//Bu yüzden 50'þer 50'þer gidip geliniyor
+			//Northwind servisinden en fazla 50 kayï¿½t dï¿½nï¿½yor
+			//Bu yï¿½zden 50'ï¿½er 50'ï¿½er gidip geliniyor
 			Connection connection = new Connection();
 			httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = connection.getResponse(Util.ServiceUri + Util.orderExpand, httpClient);
@@ -28,16 +29,16 @@ public class InvoiceFilterOData {
 			Gson gson = new Gson();
 			SalesOrderDataSet salesOrder = gson.fromJson(responseFromJson, SalesOrderDataSet.class);
 		
-			//Gelen gson u objesini dönüyoruz
+			//Gelen gson u objesini dï¿½nï¿½yoruz
 			for (int i = 0; i < serviceResponseSize; i++) {
-				//Gelen objelerdeki OrderID'leri tek tek alýyoruz ve filtre için vereceðimiz 
-				//Url'i oluþturyoruz
-				int orderID = salesOrder.d.results.get(i).getOrderID();
+				//Gelen objelerdeki OrderID'leri tek tek alï¿½yoruz ve filtre iï¿½in vereceï¿½imiz 
+				//Url'i oluï¿½turyoruz
+				long orderID = salesOrder.d.results.get(i).getOrderID();
 				queryForInvoice = queryForInvoice + Util.filterWithOrderID + orderID;
-				// Her 50 kayýdýn sonuncusu hariç "OR" koymasý için bir if açýyoruz
+				// Her 50 kayï¿½dï¿½n sonuncusu hariï¿½ "OR" koymasï¿½ iï¿½in bir if aï¿½ï¿½yoruz
 				if (i % serviceResponseSize != serviceResponseSize - 1) {
 					queryForInvoice = queryForInvoice + Util.OR;
-					// Eðer 50. kayýt geldiyse oluþturduðumuz URL 'le servise gidip
+					// Eï¿½er 50. kayï¿½t geldiyse oluï¿½turduï¿½umuz URL 'le servise gidip
 					// Invoice u filtreliyoruz
 				} else if (i % serviceResponseSize == serviceResponseSize - 1) {
 					HttpResponse responseForInvoice = connection
@@ -49,26 +50,26 @@ public class InvoiceFilterOData {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					//Servisten sonucu aldýktan sonra linki sýfýrlamak için yarattýðýmýz
-					// queryForInvoice stringini sýfýrlýyoruz
+					//Servisten sonucu aldï¿½ktan sonra linki sï¿½fï¿½rlamak iï¿½in yarattï¿½ï¿½ï¿½mï¿½z
+					// queryForInvoice stringini sï¿½fï¿½rlï¿½yoruz
 					queryForInvoice = "";
-					//Kayýt bitene kadar 50 ekleyip tekrar dönüyoruz bu sayede her seferinde 
-					//50'þer kayýt çekiyoruz
+					//Kayï¿½t bitene kadar 50 ekleyip tekrar dï¿½nï¿½yoruz bu sayede her seferinde 
+					//50'ï¿½er kayï¿½t ï¿½ekiyoruz
 					if (serviceResponseSize != salesOrder.d.results.size()) {
 						serviceResponseSize = serviceResponseSize + 50;
 					}
 
 				}
 			}
-			//Ilk önce SalesOrderýn içinkide OrderID'yi alýp
-			//InvoiceListimizin için dönüyoruz 
+			//Ilk ï¿½nce SalesOrderï¿½n iï¿½inkide OrderID'yi alï¿½p
+			//InvoiceListimizin iï¿½in dï¿½nï¿½yoruz 
 			for (int z = 0; z < salesOrder.d.results.size(); z++) {
-				int orderID = salesOrder.d.results.get(z).getOrderID();
+				long orderID = salesOrder.d.results.get(z).getOrderID();
 				for (int y = 0; y < invoiceList.size(); y++) {
 					int invoiceOrderID = invoiceList.get(y).getOrderID();
-					//Eðer SalesOrderýn içinkide OrderID InvoiceListin içinde varsa
-					//O Invoice u SalesOrderýn içine ekliyoruz
-					//Ondan sonra bu Invoice un için SalesOrderý ekliyoruz ve yapýmýz Bidirectional oluyor
+					//Eï¿½er SalesOrderï¿½n iï¿½inkide OrderID InvoiceListin iï¿½inde varsa
+					//O Invoice u SalesOrderï¿½n iï¿½ine ekliyoruz
+					//Ondan sonra bu Invoice un iï¿½in SalesOrderï¿½ ekliyoruz ve yapï¿½mï¿½z Bidirectional oluyor
 					if (orderID == invoiceOrderID) {
 						salesOrder.d.results.get(z).setInvoice(invoiceList.get(y));
 						invoiceList.get(y).setOrder(salesOrder.d.results.get(z));
@@ -81,6 +82,7 @@ public class InvoiceFilterOData {
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
+		return invoiceList;
 		
 	}
 }

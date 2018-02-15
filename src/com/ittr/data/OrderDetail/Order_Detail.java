@@ -9,8 +9,11 @@ public class Order_Detail {
 	private double UnitPrice;
 	private short Quantity;
 	private float Discount;
-
-	Product Product;
+	private long InternalItemID;
+	private String ExternalItemID;
+	private String ExternalOrderID;
+	private long InternalOrderID;
+	private Product Product;
 	public int getOrderID() {
 		return OrderID;
 	}
@@ -40,5 +43,36 @@ public class Order_Detail {
 	}
 	public void setDiscount(float discount) {
 		Discount = discount;
+	}
+
+	public String getExternalItemID() {
+		return ExternalItemID;
+	}
+	public void setExternalItemID(String externalItemID) {
+		ExternalItemID = externalItemID;
+	}
+	public String getExternalOrderID() {
+		return ExternalOrderID;
+	}
+	public void setExternalOrderID(String externalOrderID) {
+		ExternalOrderID = externalOrderID;
+	}
+	public long getInternalOrderID() {
+		return InternalOrderID;
+	}
+	public void setInternalOrderID(long internalOrderID) {
+		InternalOrderID = internalOrderID;
+	}
+	public Product getProduct() {
+		return Product;
+	}
+	public void setProduct(Product product) {
+		Product = product;
+	}
+	public long getInternalItemID() {
+		return InternalItemID;
+	}
+	public void setInternalItemID(long internalItemID) {
+		InternalItemID = internalItemID;
 	}
 }
